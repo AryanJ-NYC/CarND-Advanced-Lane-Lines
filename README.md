@@ -7,8 +7,7 @@ The steps to the pipeline are as follows:
 1. Calibrate the camera.  The [OpenCV tutorial](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_calib3d/py_calibration/py_calibration.html) is helpful with this step.
 2. Apply a distortion correction to raw images.
 3. Use color transforms to create a thresholded binary image.
-4. Mask the pixels of the binary image that are not in directly in front of the camera (which are irrelevant to lane detection).
-5. Apply a perspective transform to the binary image to obtain a "bird's eye view" of the lanes.
+4. Apply a perspective transform to the binary image to obtain a "bird's eye view" of the lanes.
 6. Use the [sliding windows object detection](http://www.pyimagesearch.com/2015/03/23/sliding-windows-for-object-detection-with-python-and-opencv/) technique to identify lane line pixels.
 7. Calculate the curvature of the lane and the camera offset with respect to center.
 8. Warp the detected lane boundaries back onto the original image.
@@ -30,11 +29,6 @@ The code for the color transforms is in the "Create Binary Thresholded Images" c
 It uses OpenCV's [`inRange()`](http://docs.opencv.org/2.4/modules/core/doc/operations_on_arrays.html#inrange) method to create an array within a range of specified thresholds.
 When the transforms are applied to the test images, the following images are returned:  
 ![Original Image vs. Binary Image](./images-for-report/binary_images.png)
-
-## Image Mask
-Region masking is applied to each binary image to ignore any pixels outside of the scope of interest.
-More specifically, the scope of interest is directly in front of the car's camera.  
-![Binary Image vs. Masked Binary Image](./images-for-report/masked_images.png)
 
 ## Perspective Transform
 A perspective transform is applied to each binary image (and each test image for visualization purposes).
@@ -65,10 +59,8 @@ Additionally, the corresponding curvature and camera offset are displayed on the
 
 # Video Output
 After using the test images to create and evaluate the pipeline, the entire sample video is run through the pipeline.
-The final result can be viewed [here](https://www.youtube.com/watch?v=yhU9O0zttnc) on YouTube.
+The final result can be viewed [here](https://www.youtube.com/watch?v=_xsbWD8bTbM) on YouTube.
 
 # Discussion
-Overall, I am happy with my pipeline.  As I finished the pipeline, I realized that the image mask was unnecessary
-given the perspective transform forces the algorithm to be run on only one part of the image (those pixels which were transformed).
-Furthermore, the curvature calculations were incorrect when a straight lane line was fit.  Lastly, a faster algorithm can be created by
-running sliding windows only one then only considering those pixels within a given margin of the best-fit lane line.
+Overall, I am happy with my pipeline.  
+The curvature calculations were incorrect when a straight lane line was fit.  Lastly, a faster algorithm can be created by running the sliding windows algorithms only once then only considering those pixels within a given margin of the best-fit lane line.
